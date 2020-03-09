@@ -37,12 +37,12 @@ export const ADD_FAV = gql`
   }
 `;
 
-export const ADD_REVIEW = gql`
-  mutation AddReview($bookId: Int!, $comment: String!, $rating: Rating!) {
-    AddReview(bookId: $bookId, comment: $comment, rating: $rating) {
-      ok
-      error
-      reviewId
-    }
-  }
-`;
+// export const ADD_REVIEW = gql`
+//   mutation AddReview($bookId: Int!, $comment: String!, $rating: Rating!) {
+//     AddReview(bookId: $bookId, comment: $comment, rating: $rating) {
+//       ok
+//       error
+//       reviewId
+//     }
+//   }
+// `;

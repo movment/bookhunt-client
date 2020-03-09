@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { GetBook, AddFavorite, AddReview } from '../../types/api';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import Text from '../../components/Text';
-import { GET_BOOK, ADD_FAV, ADD_REVIEW } from './BookQueries';
+import { GET_BOOK, ADD_FAV } from './BookQueries';
 import { TOGGLE_FAV } from './BookQueries.local';
 
 interface IParams {
