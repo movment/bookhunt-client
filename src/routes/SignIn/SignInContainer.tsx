@@ -10,11 +10,13 @@ const SignInContainer: React.SFC<RouteComponentProps> = ({ history }) => {
   const [userSignIn] = useMutation(USER_SIGN_IN);
   const [signIn, data] = useMutation<SignIn>(SIGN_IN, {
     onCompleted: ({ SignIn }) => {
-      userSignIn({
-        variables: {
-          token: SignIn.token,
-        },
-      }).then(() => history.push('/'));
+      if (!SignIn.error) {
+        userSignIn({
+          variables: {
+            token: SignIn.token,
+          },
+        }).then(() => history.push('/'));
+      }
     },
   });
 
