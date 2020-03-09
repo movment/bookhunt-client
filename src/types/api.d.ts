@@ -9,6 +9,7 @@
 
 export interface GetReviews_GetReviews_reviews_user {
   __typename: "User";
+  id: number;
   name: string;
 }
 
@@ -32,6 +33,31 @@ export interface GetReviews {
 
 export interface GetReviewsVariables {
   bookId: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: AddReview
+// ====================================================
+
+export interface AddReview_AddReview {
+  __typename: "AddReviewResponse";
+  ok: boolean;
+  error: string | null;
+}
+
+export interface AddReview {
+  AddReview: AddReview_AddReview;
+}
+
+export interface AddReviewVariables {
+  bookId: number;
+  comment: string;
+  rating: Rating;
 }
 
 /* tslint:disable */
@@ -93,32 +119,6 @@ export interface AddFavorite {
 
 export interface AddFavoriteVariables {
   bookId: number;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: AddReview
-// ====================================================
-
-export interface AddReview_AddReview {
-  __typename: "AddReviewResponse";
-  ok: boolean;
-  error: string | null;
-  reviewId: number | null;
-}
-
-export interface AddReview {
-  AddReview: AddReview_AddReview;
-}
-
-export interface AddReviewVariables {
-  bookId: number;
-  comment: string;
-  rating: Rating;
 }
 
 /* tslint:disable */
