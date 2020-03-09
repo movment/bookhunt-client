@@ -9,9 +9,19 @@ export const GET_REVIEWS = gql`
         id
         comment
         user {
+          id
           name
         }
       }
+    }
+  }
+`;
+
+export const ADD_REVIEW = gql`
+  mutation AddReview($bookId: Int!, $comment: String!, $rating: Rating!) {
+    AddReview(bookId: $bookId, comment: $comment, rating: $rating) {
+      ok
+      error
     }
   }
 `;
