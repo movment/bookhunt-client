@@ -3,7 +3,6 @@ import { SearchDetail_SearchBooks_books } from '../../types/api';
 import styled from 'styled-components';
 import Title from '../../components/Title';
 import Text from '../../components/Text';
-import Input from '../../components/Input';
 import SearchInput from '../../components/SearchInput';
 
 const Container = styled.div`

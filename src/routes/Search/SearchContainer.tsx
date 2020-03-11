@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import queryString from 'query-string';
 import SearchPresenter from './SearchPresenter';
@@ -16,14 +16,6 @@ const SearchContainer: React.SFC<RouteComponentProps> = ({
     variables: { title: query, max: 25 },
   });
 
-  const [title, setTitle] = useState(query);
-  const onChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const {
-      target: { value },
-    } = event;
-
-    setTitle(value);
-  };
   const handleClick = (bookId: number) => {
     history.push(`/book/${bookId}`);
   };
