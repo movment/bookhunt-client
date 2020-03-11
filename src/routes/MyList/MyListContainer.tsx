@@ -17,7 +17,6 @@ const MyListContainer = () => {
       type: 'MY',
     },
   });
-  console.log(data);
   const [addList] = useMutation(ADD_BOOK_LIST_IN_CACHE, {});
   const [addBookList] = useMutation<AddBookList>(ADD_BOOK_LIST, {
     onCompleted: ({ AddBookList }) => {
@@ -39,7 +38,6 @@ const MyListContainer = () => {
     return <Title>Error...</Title>;
   }
   const onClick: MouseEventHandler<HTMLDivElement> = (event) => {
-    event.preventDefault();
     setClicked(!clicked);
   };
   const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
@@ -50,6 +48,7 @@ const MyListContainer = () => {
           title,
         },
       });
+      setTitle('');
     }
   };
   const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {

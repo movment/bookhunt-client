@@ -5,12 +5,14 @@ import styled from 'styled-components';
 import Form from '../../components/Form';
 import Input from '../../components/Input';
 import SLink from '../../components/SLink';
+import { Board, BoardWrapper, BoardButton } from '../../components/Board';
+import SearchInput from '../../components/SearchInput';
 
 interface IProps {
   lists: (GetLists_GetLists_lists | null)[] | null | undefined;
   clicked: boolean;
   title: string;
-  onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
+  onClick: (event) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -18,25 +20,37 @@ interface IProps {
 const Container = styled.div`
   position: fixed;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  z-index: 1000;
 `;
-const Modal = styled.div<any>`
-  display: ${(props) => (props.clicked ? 'block' : 'none')};
+const Modal = styled.div`
+  display: flex;
+  flex-direction: column;
   position: fixed;
-
+  width: 20%;
+  /* height: 30%; */
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  /* opacity: 0.5; */
   background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.6);
 `;
-
+const FormInner = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  & > *:not(:last-child) {
+    margin-bottom: 20px;
+  }
+`;
 const MyListPresenter: React.SFC<IProps> = ({
   lists,
   clicked,
@@ -46,33 +60,35 @@ const MyListPresenter: React.SFC<IProps> = ({
   onSubmit,
 }) => {
   return (
-    <>
-      <div>
-        <Button onClick={onClick}>+</Button>
-      </div>
+    <div>
       {clicked && (
         <Container onClick={onClick}>
           <Modal
-            clicked={clicked}
             onClick={(event: React.MouseEvent) => {
               event.stopPropagation();
             }}
           >
             <Form onSubmit={onSubmit}>
-              <Input placeholder="title" value={title} onChange={onChange} />
-              <Button>만들기</Button>
+              <FormInner>
+                <span>서재 이름</span>
+                <Input placeholder="title" value={title} onChange={onChange} />
+                <Button>만들기</Button>
+              </FormInner>
             </Form>
           </Modal>
         </Container>
       )}
       <div>
-        {lists?.map((list) => (
-          <SLink to={`/list/${list?.id}`} key={list?.id}>
-            {list?.title}
-          </SLink>
-        ))}
+        <div style={{ width: '70%', margin: '0 auto' }}>
+          <SearchInput />
+        </div>
+
+        <BoardWrapper>
+          <BoardButton onClick={onClick} />
+          <Board lists={lists} />
+        </BoardWrapper>
       </div>
-    </>
+    </div>
   );
 };
 
