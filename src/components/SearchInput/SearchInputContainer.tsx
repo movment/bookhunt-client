@@ -1,4 +1,4 @@
-import React, { useState, InputHTMLAttributes } from 'react';
+import React, { useState } from 'react';
 import SearchInputPresenter from './SearchInputPresenter';
 import Highlight from '../Highlight';
 import { SearchBooks } from '../../types/api';
@@ -7,11 +7,11 @@ import { SEARCH_BOOKS } from '../../routes/Home/HomeQueries';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 interface IProps {
-  onClick?: (event: React.MouseEvent) => void;
+  clickEvent?: (bookId: number) => void;
 }
 const SearchInputContainer: React.SFC<RouteComponentProps & IProps> = ({
   history,
-  children,
+  clickEvent,
 }) => {
   const [title, setTitle] = useState('');
   const [timer, setTimer] = useState(0);
@@ -73,10 +73,12 @@ const SearchInputContainer: React.SFC<RouteComponentProps & IProps> = ({
     setCalled(false);
   };
   const handleClick = (bookId: number) => {
-    console.log(history);
-    history.push(`/book/${bookId}`);
+    if (!clickEvent) {
+      history.push(`/book/${bookId}`);
+    } else {
+      clickEvent(bookId);
+    }
   };
-  console.log(children);
   return (
     <SearchInputPresenter
       title={title}
@@ -88,9 +90,7 @@ const SearchInputContainer: React.SFC<RouteComponentProps & IProps> = ({
       onBlur={onBlur}
       onFocus={onFocus}
       handleClick={handleClick}
-    >
-      {children}
-    </SearchInputPresenter>
+    />
   );
 };
 
