@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Input from '../../components/Input';
 import { SearchBooks_SearchBooks_books } from '../../types/api';
 import SearchInput from '../../components/SearchInput';
 

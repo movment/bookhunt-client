@@ -4,7 +4,6 @@ import { SEARCH_BOOKS } from './HomeQueries';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { SearchBooks } from '../../types/api';
 import { RouteComponentProps } from 'react-router-dom';
-import Text from '../../components/Text';
 import Highlight from '../../components/Highlight';
 
 const HomeContainer: React.SFC<RouteComponentProps> = ({ history }) => {
@@ -14,27 +13,7 @@ const HomeContainer: React.SFC<RouteComponentProps> = ({ history }) => {
     onCompleted: () => setCalled(true),
   });
   const [called, setCalled] = useState(false);
-  // const highlight =
-  //   title &&
-  //   data?.SearchBooks.books?.map((book) => {
-  //     const sTitle = book?.title.split(title);
-  //     if ((sTitle?.length as number) > 1)
-  //       return (
-  //         <span>
-  //           {sTitle?.map((cur, index) => {
-  //             if (index > 0)
-  //               return (
-  //                 <span key={`${cur}${index}`}>
-  //                   <Text style={{ color: 'orange' }}>{title}</Text>
-  //                   {cur}
-  //                 </span>
-  //               );
-  //             return <span key={`${cur}${index}`}>{cur}</span>;
-  //           })}
-  //         </span>
-  //       );
-  //     return book?.title;
-  //   });
+
   const highlight =
     title &&
     data?.SearchBooks.books?.map((book, i) => {
