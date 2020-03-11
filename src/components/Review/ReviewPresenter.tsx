@@ -7,11 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
+  userId: number;
   reviews: (GetReviews_GetReviews_reviews | null)[] | null | undefined;
   comment: string;
   onChange: (event) => void;
-  onSubmit: (event) => void;
-  userId: number;
+  handleSubmit: (opt?) => void;
+  handleClick: (opt?) => void;
 }
 
 const FormContainer = styled.div`
@@ -73,16 +74,22 @@ const Del = styled.button`
   }
 `;
 const ReviewPresenter: React.SFC<IProps> = ({
+  userId,
   reviews,
   comment,
   onChange,
-  onSubmit,
-  userId,
+  handleSubmit,
+  handleClick,
 }) => {
   return (
     <FormContainer>
       <div>
-        <Form onSubmit={onSubmit}>
+        <Form
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleSubmit();
+          }}
+        >
           <TextArea placeholder="댓글" onChange={onChange} value={comment} />
           <Button>리뷰</Button>
         </Form>
@@ -96,7 +103,13 @@ const ReviewPresenter: React.SFC<IProps> = ({
                 <Comment>{review?.comment}</Comment>
               </Review>
               {review?.user?.id === userId && (
-                <Del>
+                <Del
+                  onClick={() => {
+                    handleClick({
+                      variables: { reviewId: review?.id },
+                    });
+                  }}
+                >
                   <FontAwesomeIcon icon={faBan} />
                 </Del>
               )}

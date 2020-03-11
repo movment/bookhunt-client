@@ -25,3 +25,12 @@ export const ADD_REVIEW = gql`
     }
   }
 `;
+
+export const DEL_REVIEW = gql`
+  mutation DelReview($reviewId: Int!) {
+    DelReview(reviewId: $reviewId) {
+      ok
+      error
+    }
+  }
+`;

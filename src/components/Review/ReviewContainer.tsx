@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ReviewPresenter from './ReviewPresenter';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { GET_REVIEWS, ADD_REVIEW } from './ReviewQueries';
-import { GetReviews, AddReview } from '../../types/api';
+import { GET_REVIEWS, ADD_REVIEW, DEL_REVIEW } from './ReviewQueries';
+import { GetReviews } from '../../types/api';
 import jwt from 'jsonwebtoken';
 import { DocumentNode } from 'graphql';
 
@@ -17,28 +17,34 @@ const ReviewContainer: React.SFC<IProps> = ({ bookId }) => {
     userId = (jwt.decode(token) as any).id;
   }
 
-  const [comment, onChange, setComment] = useInput('');
   const { data, refetch } = useQuery<GetReviews>(GET_REVIEWS, {
     variables: {
       bookId,
     },
+    fetchPolicy: 'network-only',
   });
 
-  const onSubmit = useSubmit(
-    ADD_REVIEW,
-    { bookId, comment, rating: 'THREE' },
-    () => {
+  const [comment, onChange, setComment] = useInput('');
+  const handleSubmit = useSubmit(ADD_REVIEW, {
+    variables: { bookId, comment, rating: 'THREE' },
+    onCompleted: () => {
       setComment('');
       refetch();
     },
-  );
+  });
+  const handleClick = useClick(DEL_REVIEW, {
+    onCompleted: () => {
+      refetch();
+    },
+  });
   return (
     <ReviewPresenter
+      userId={userId}
       reviews={data?.GetReviews.reviews}
       comment={comment}
       onChange={onChange}
-      onSubmit={onSubmit}
-      userId={userId}
+      handleSubmit={handleSubmit}
+      handleClick={handleClick}
     />
   );
 };
@@ -64,33 +70,19 @@ const useInput = (
   return [comment, onChange, setComment];
 };
 
-const useSubmit = (node: DocumentNode, variables, onCompleted) => {
-  const [mutation] = useMutation<AddReview>(node, {
-    onCompleted: onCompleted,
-  });
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
-    mutation({
-      variables,
-    });
+const useSubmit = (node: DocumentNode, options?) => {
+  const [mutation] = useMutation(node, options);
+  const handleSubmit = (opt = {}) => {
+    mutation(opt);
   };
 
-  return onSubmit;
+  return handleSubmit;
 };
 
-// const [addReivew] = useMutation<AddReview>(ADD_REVIEW, {
-//   onCompleted: () => {
-//     setComment('');
-//     refetch();
-//   },
-// });
-// const onSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-//   event.preventDefault();
-//   addReivew({
-//     variables: {
-//       bookId,
-//       comment,
-//       rating: 'THREE',
-//     },
-//   });
-// };
+const useClick = (node: DocumentNode, options?) => {
+  const [mutation] = useMutation(node, options);
+  const handleClick = (opt = {}) => {
+    mutation(opt);
+  };
+  return handleClick;
+};
