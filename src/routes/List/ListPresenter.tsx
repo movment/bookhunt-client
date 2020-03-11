@@ -1,138 +1,80 @@
 import React from 'react';
-import Input from '../../components/Input';
-import Button from '../../components/Button';
 import { GetBooksInList_GetBooksInList_books } from '../../types/api';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import Board from '../../components/Board';
-import Title from '../../components/Title';
-import Text from '../../components/Text';
 import SearchInput from '../../components/SearchInput';
+import { BoardWrapper, Board, BoardButton } from '../../components/Board';
 
-const Main = styled.main`
-  margin: 0 auto;
-  width: 75%;
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+const Container = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  z-index: 1000;
 `;
-const Section = styled(Link)`
+const Modal = styled.div`
   display: flex;
   flex-direction: column;
-  height: 400px;
-  width: 200px;
-  margin: 45px;
+  position: fixed;
+  width: 20%;
+  /* height: 30%; */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.6);
 `;
-
-const TitleWrapper = styled.div`
-  margin-top: 10px;
-`;
-const AuthorWrapper = styled.div`
-  margin-top: 10px;
+const FormInner = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  & > *:not(:last-child) {
+    margin-bottom: 20px;
+  }
 `;
 
 interface IProps {
-  title: string;
-  search: any[];
   books: (GetBooksInList_GetBooksInList_books | null)[] | undefined | null;
-  toggle: (bookId: number, isAdded: boolean) => void;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   clicked: boolean;
   onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
+  handleClick: (bookId: number) => void;
 }
-const Modal = styled.div`
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-`;
+
 const ListPresenter: React.SFC<IProps> = ({
-  title,
-  search,
-  onChange,
-  toggle,
   books,
   clicked,
   onClick,
-  children,
+  handleClick,
 }) => {
-  console.log(children);
   return (
     <div>
       {clicked && (
-        <Modal onClick={onClick}>
-          <div
-            style={{
-              position: 'relative',
-              backgroundColor: 'white',
-              left: '500px',
-              top: '300px',
-              // transform: 'translate(-50%, -50%)',
-              width: '50%',
+        <Container onClick={onClick}>
+          <Modal
+            onClick={(event: React.MouseEvent) => {
+              event.stopPropagation();
             }}
           >
-            <div style={{ width: '70%', margin: '0 auto' }}>
-              <SearchInput
-                onClick={(event) => {
-                  event.stopPropagation();
-                }}
-              >
-                <Button>+</Button>
-              </SearchInput>
-            </div>
-            <Input
-              placeholder="책 이름을 입력하세요"
-              onChange={onChange}
-              value={title}
-              onClick={(event) => {
-                event.stopPropagation();
-              }}
-            />
-
-            <div>
-              {search?.map((book) => (
-                <div
-                  key={book?.id}
-                  onClick={(event) => event?.stopPropagation()}
-                >
-                  <div>{book?.title}</div>
-                  <Button onClick={() => toggle(book?.id, book?.isAdded)}>
-                    {!book?.isAdded ? '추가' : '취소'}
-                  </Button>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Modal>
+            <FormInner>
+              <SearchInput clickEvent={handleClick} />
+            </FormInner>
+          </Modal>
+        </Container>
       )}
       <div>
-        <Main>
-          <Section to="#">
-            <Board to="#">
-              <Button onClick={onClick}>+</Button>
-            </Board>
-          </Section>
-          {books?.map((book) => {
-            return (
-              <Section to={`/book/${book?.id}`} key={book?.id}>
-                <Board
-                  to={`/book/${book?.id}`}
-                  key={book?.id}
-                  image={book?.image}
-                />
-                <TitleWrapper>
-                  <Title type="small">{book?.title}</Title>
-                </TitleWrapper>
-                <AuthorWrapper>
-                  <Text>{book?.author}</Text>
-                </AuthorWrapper>
-              </Section>
-            );
-          })}
-        </Main>
+        <div style={{ width: '70%', margin: '0 auto' }}>
+          <SearchInput />
+        </div>
+        <BoardWrapper>
+          <BoardButton onClick={onClick} />
+          <Board books={books} />
+        </BoardWrapper>
       </div>
     </div>
   );

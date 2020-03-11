@@ -1,77 +1,51 @@
-import React, { useState, ChangeEventHandler, MouseEventHandler } from 'react';
+import React, { useState } from 'react';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import ListPresenter from './ListPresenter';
-import { SEARCH_BOOK, TOGGLE_ADD } from './ListQueries.local';
-import { useLazyQuery, useMutation, useQuery } from '@apollo/react-hooks';
-import { ADD_BOOK_IN_LIST, GET_BOOKS_IN_LIST } from './ListQueries';
+import { GET_BOOKS_IN_LIST, ADD_BOOK_IN_LIST } from './ListQueries';
 import { RouteComponentProps } from 'react-router-dom';
 import { GetBooksInList } from '../../types/api';
 
 interface IParams {
   id: string;
 }
+
 const ListContainer: React.SFC<RouteComponentProps<IParams>> = ({ match }) => {
-  const { data: books } = useQuery<GetBooksInList>(GET_BOOKS_IN_LIST, {
+  const { data, refetch } = useQuery<GetBooksInList>(GET_BOOKS_IN_LIST, {
     variables: {
       listId: parseInt(match.params.id),
     },
+    fetchPolicy: 'network-only',
   });
-  const [title, setTitle] = useState('');
-  const [searchBook, { data }] = useLazyQuery(SEARCH_BOOK);
-  const [toggleAdded] = useMutation(TOGGLE_ADD);
-  const [addBookInList] = useMutation(ADD_BOOK_IN_LIST);
-  const [timer, setTimer] = useState(0);
+  console.log(data);
+  const [addBookInList] = useMutation(ADD_BOOK_IN_LIST, {
+    onCompleted: () => {
+      refetch();
+    },
+  });
+  const handleClick = (bookId: number) => {
+    addBookInList({
+      variables: { listId: parseInt(match.params.id), bookId },
+    });
+  };
+  const [clicked, onClick] = useModal(false);
 
-  const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    if (timer) {
-      clearTimeout(timer);
-    }
-    const {
-      target: { value },
-    } = event;
-    setTitle(value);
-    setTimer(
-      setTimeout(
-        () =>
-          searchBook({
-            variables: {
-              max: 5,
-              title: value,
-            },
-          }),
-        500,
-      ),
-    );
-  };
-  const toggle = async (bookId: number, isAdded: boolean) => {
-    await addBookInList({
-      variables: {
-        bookId,
-        listId: parseInt(match.params.id),
-      },
-    });
-    toggleAdded({
-      variables: {
-        bookId,
-        isAdded,
-      },
-    });
-  };
-  const [clicked, setClicked] = useState(false);
-  const onClick: MouseEventHandler<HTMLDivElement> = (event) => {
-    event.preventDefault();
-    setClicked(!clicked);
-  };
   return (
     <ListPresenter
-      title={title}
-      search={data?.SearchBooks.books}
-      books={books?.GetBooksInList.books}
-      onChange={onChange}
-      toggle={toggle}
+      books={data?.GetBooksInList.books}
       clicked={clicked}
       onClick={onClick}
+      handleClick={handleClick}
     />
   );
 };
 
 export default ListContainer;
+
+// custom hooks
+const useModal = (bool: boolean): [boolean, () => void] => {
+  const [clicked, setClicked] = useState(bool);
+  const onClick = () => {
+    setClicked(!clicked);
+  };
+  return [clicked, onClick];
+};

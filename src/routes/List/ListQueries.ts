@@ -20,6 +20,13 @@ export const GET_BOOKS_IN_LIST = gql`
         author
         image
       }
+      list {
+        title
+        user {
+          id
+          name
+        }
+      }
     }
   }
 `;
