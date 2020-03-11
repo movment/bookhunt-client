@@ -18,7 +18,6 @@ interface IProps {
   sort: string;
 }
 const SortPresenter: React.SFC<IProps> = ({ sort }) => {
-  console.log(sort);
   return (
     <Container>
       <SLink to="/tour?sort=views">
