@@ -8,7 +8,7 @@ import { SignIn } from '../../types/api';
 
 const SignInContainer: React.SFC<RouteComponentProps> = ({ history }) => {
   const [userSignIn] = useMutation(USER_SIGN_IN);
-  const [signIn, data] = useMutation<SignIn>(SIGN_IN, {
+  const [signIn] = useMutation<SignIn>(SIGN_IN, {
     onCompleted: ({ SignIn }) => {
       if (!SignIn.error) {
         userSignIn({
