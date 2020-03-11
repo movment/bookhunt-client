@@ -2,7 +2,6 @@ import ApolloClient, { Operation } from 'apollo-boost';
 import { GET_MY_LIST } from './routes/MyList/MyListQueries';
 
 const client = new ApolloClient({
-  // cache: new InMemoryCache(),
   uri: 'http://localhost:4000/graphql',
   request: (opertaion: Operation) => {
     opertaion.setContext({
@@ -22,6 +21,7 @@ const client = new ApolloClient({
       Book: {
         isAdded: () => false,
       },
+
       Mutation: {
         UserSignIn: (_, { token }, { cache }) => {
           localStorage.setItem('jwt', token);
