@@ -1,7 +1,7 @@
-import React, { ChangeEventHandler, useState, FormEventHandler } from 'react';
+import React from 'react';
 import BookPresenter from './BookPresenter';
 import { RouteComponentProps } from 'react-router-dom';
-import { GetBook, AddFavorite, AddReview } from '../../types/api';
+import { GetBook, AddFavorite } from '../../types/api';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import Text from '../../components/Text';
 import { GET_BOOK, ADD_FAV } from './BookQueries';
