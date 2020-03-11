@@ -1,12 +1,8 @@
 import { gql } from 'apollo-boost';
 
-enum SortOptions {
-  VIEWS,
-  PUBDATE,
-}
 export const GET_BOOKS = gql`
-  query GetBooks($sort: SortOptions) {
-    GetBooks(sort: $sort) {
+  query GetBooks($sort: SortOptions, $page: Int!) {
+    GetBooks(sort: $sort, page: $page) {
       ok
       error
       books {
@@ -16,6 +12,7 @@ export const GET_BOOKS = gql`
         author
         link
       }
+      max
     }
   }
 `;

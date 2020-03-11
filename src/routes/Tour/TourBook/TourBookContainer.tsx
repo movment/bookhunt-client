@@ -8,20 +8,29 @@ import { GetBooks } from '../../../types/api';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 const TourBookContainer: React.SFC<RouteComponentProps> = ({ location }) => {
-  const { sort = 'views' } = queryString.parse(location.search);
+  const { sort = 'views', page = '1' } = queryString.parse(location.search);
 
   const { loading, error, data } = useQuery<GetBooks>(GET_BOOKS, {
     variables: {
       sort: (sort as string).toUpperCase(),
+      page: parseInt(page as string),
     },
   });
+  console.log(data);
   if (loading) {
     return <Text>Loading...</Text>;
   }
   if (error) {
     return <Text>Error...</Text>;
   }
-  return <TourPresenter books={data?.GetBooks?.books} sort={sort as string} />;
+  return (
+    <TourPresenter
+      books={data?.GetBooks?.books}
+      sort={sort as string}
+      page={page as string}
+      max={data?.GetBooks?.max}
+    />
+  );
 };
 
 export default withRouter(TourBookContainer);
