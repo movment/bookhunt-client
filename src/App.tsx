@@ -17,6 +17,7 @@ import { useQuery } from '@apollo/react-hooks';
 import MyList from './routes/MyList';
 import List from './routes/List';
 import Search from './routes/Search';
+import Footer from './components/Footer';
 
 const IS_LOGGED_IN = gql`
   {
@@ -46,6 +47,7 @@ const App: React.SFC<RouteComponentProps> = ({ location }) => {
         <Route path="/list/:id" component={List} />
         <Route path="/search" component={Search} />
       </Switch>
+      <Footer />
     </>
   );
 };
