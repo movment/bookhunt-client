@@ -33,34 +33,47 @@ const PLink = styled(Link)`
 interface IProps {
   page: number;
   max: number;
+  to: string;
+  sort: string;
 }
-const PaginationPresenter = ({ page = 1, max }) => {
+const PaginationPresenter = ({ page = 1, max, to, sort }) => {
   const size = 5;
   const q = Math.floor((page - 1) / size);
   const r = ((page - 1) % size) + 1;
   const firstPage = q * size + 1;
   const lists = new Array(size).fill(0);
-
+  // const qs = queryString.stringify({ sort, page });
   return (
     <Container>
       <Ul page={r}>
         <Li>
           <PLink
-            to={`/tour?page=${firstPage - size > 0 ? firstPage - size : 1}`}
+            to={`${to}?sort=${sort}&page=${
+              firstPage - size > 0 ? firstPage - size : 1
+            }`}
           >
             {'<'}
           </PLink>
         </Li>
         {lists.map((cur, index) => {
           const newPage = firstPage + index;
-          return (
-            <Li key={newPage}>
-              <PLink to={`/tour?page=${newPage}`}>{newPage}</PLink>
-            </Li>
-          );
+
+          if (!index || max > (newPage - 1) * 20) {
+            console.log('TEST');
+            return (
+              <Li key={newPage}>
+                <PLink to={`${to}?sort=${sort}&page=${newPage}`}>
+                  {newPage}
+                </PLink>
+              </Li>
+            );
+          }
+          return null;
         })}
         <Li>
-          <PLink to={`/tour?page=${firstPage + size}`}>{'>'}</PLink>
+          <PLink to={`${to}?sort=${sort}&page=${firstPage + size}`}>
+            {'>'}
+          </PLink>
         </Li>
       </Ul>
     </Container>
