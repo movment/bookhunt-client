@@ -53,6 +53,7 @@ const client = new ApolloClient({
             query: GET_MY_LIST,
             variables: {
               type: 'MY',
+              page: args.page,
             },
           });
 
@@ -60,14 +61,15 @@ const client = new ApolloClient({
             query: GET_MY_LIST,
             variables: {
               type: 'MY',
+              page: args.page,
             },
             data: {
               GetLists: {
                 ok: true,
                 error: null,
                 lists: [
-                  ...d.GetLists.lists,
                   { id: args.id, title: args.title, __typename: 'List' },
+                  ...d.GetLists.lists,
                 ],
                 __typename: 'GetListsResponse',
               },
