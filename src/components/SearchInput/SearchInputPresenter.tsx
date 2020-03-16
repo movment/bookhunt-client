@@ -3,7 +3,6 @@ import { SearchBooks_SearchBooks_books } from '../../types/api';
 import styled from 'styled-components';
 import Text from '../Text';
 import Input from '../Input';
-import Button from '../Button';
 
 const Search = styled(Input)`
   box-shadow: 2px 2px 3px 1px rgba(41, 41, 41, 0.2);
@@ -19,6 +18,8 @@ const Ul = styled.ul<any>`
   border-radius: 5px;
   z-index: 1;
   background-color: white;
+  overflow-y: auto;
+  max-height: 500px;
 `;
 const Li = styled.li`
   display: flex;
