@@ -13,6 +13,8 @@ interface IProps {
 const Navigation = styled.nav`
   display: flex;
   justify-content: space-between;
+  position: relative;
+  z-index: 10;
   /* overflow: scroll; */
   margin: 0 auto;
   width: 75%;
