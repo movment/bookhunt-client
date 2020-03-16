@@ -1,3 +1,4 @@
+// deprecated
 import React from 'react';
 
 import { GetBooks_GetBooks_books } from '../../../types/api';
@@ -15,11 +16,11 @@ interface IProps {
 const TourBookPresenter: React.SFC<IProps> = ({ books, sort, page, max }) => {
   return (
     <>
-      <Sort sort={sort} />
+      <Sort sort={sort} to="/tour" />
       <BoardWrapper>
         <Board books={books} />
       </BoardWrapper>
-      <Pagination page={parseInt(page)} max={max} />
+      <Pagination page={parseInt(page)} max={max} to="/tour" sort={sort} />
     </>
   );
 };
