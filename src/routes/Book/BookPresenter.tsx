@@ -3,15 +3,20 @@ import styled from 'styled-components';
 import Button from '../../components/Button';
 import Title from '../../components/Title';
 import Text from '../../components/Text';
-import { GetBook_GetBooks_books } from '../../types/api';
+import {
+  GetBook_GetBooks_books,
+  GetBook_GetListsOfBook_lists,
+} from '../../types/api';
 import SearchInput from '../../components/SearchInput';
 import Review from '../../components/Review';
+import RowList from '../../components/RowList';
 
 interface IProps {
   books: (GetBook_GetBooks_books | null)[] | null | undefined;
   isFav: boolean | undefined | null;
   onClick: () => void;
   bookId: number;
+  lists: (GetBook_GetListsOfBook_lists | null)[] | null | undefined;
 }
 
 const Container = styled.div`
@@ -63,6 +68,7 @@ const BookPresenter: React.SFC<IProps> = ({
   isFav,
   onClick,
   bookId,
+  lists,
 }) => {
   const book = books?.[0];
   return (
@@ -118,48 +124,11 @@ const BookPresenter: React.SFC<IProps> = ({
           <IntroTitle>
             <span>리뷰</span>
           </IntroTitle>
-          {/* <Fieldset>
-            <Full>
-              <input type="radio" />
-            </Full>
-            <Full>
-              <input type="radio" />
-            </Full>
-            <Full>
-              <input type="radio" />
-            </Full>
-            <Full>
-              <input type="radio" />
-            </Full>
-            <Full>
-              <input type="radio" />
-            </Full>
-          </Fieldset> */}
-          {/* <div>
-            <Form onSubmit={onSubmit}>
-              <textarea
-                placeholder="댓글"
-                onChange={onChange}
-                value={comment}
-                style={{ resize: 'vertical' }}
-              />
-              <Button>리뷰</Button>
-            </Form>
-          </div>
-          <ul>
-            {book?.reviews?.map((cur) => (
-              <li key={cur?.id}>
-                <div>
-                  <span>{cur?.comment}</span>
-                  <span>{cur?.user?.name}</span>
-                </div>
-              </li>
-            ))}
-          </ul> */}
+
           <Review bookId={bookId} />
         </div>
-        <div style={{ marginTop: '100px' }}>이 작품이 담긴 리스트</div>
       </Description>
+      <RowList lists={lists} />
     </>
   );
 };

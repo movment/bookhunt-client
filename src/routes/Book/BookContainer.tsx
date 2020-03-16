@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { GetBook, AddFavorite } from '../../types/api';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import Text from '../../components/Text';
-import { GET_BOOK, ADD_FAV } from './BookQueries';
+import { GET_BOOK, ADD_FAV, GET_LISTS_OF_BOOK } from './BookQueries';
 import { TOGGLE_FAV } from './BookQueries.local';
 
 interface IParams {
@@ -37,6 +37,7 @@ const BookContainer: React.SFC<RouteComponentProps<IParams>> = ({
     addFavorite();
   };
 
+  console.log(data);
   if (loading) {
     return <Text>Loading...</Text>;
   }
@@ -49,6 +50,7 @@ const BookContainer: React.SFC<RouteComponentProps<IParams>> = ({
       isFav={data?.GetBooks?.books?.[0]?.isFav}
       onClick={onClick}
       bookId={bookId}
+      lists={data?.GetListsOfBook.lists}
     />
   );
 };

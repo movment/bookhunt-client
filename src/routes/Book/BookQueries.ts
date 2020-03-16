@@ -16,13 +16,16 @@ export const GET_BOOK = gql`
         publisher
         pubdate
         description
-        # reviews {
-        #   id
-        #   comment
-        #   user {
-        #     name
-        #   }
-        # }
+      }
+    }
+    GetListsOfBook(bookId: $bookId) {
+      lists {
+        id
+        title
+        user {
+          id
+          name
+        }
       }
     }
   }
@@ -37,12 +40,13 @@ export const ADD_FAV = gql`
   }
 `;
 
-// export const ADD_REVIEW = gql`
-//   mutation AddReview($bookId: Int!, $comment: String!, $rating: Rating!) {
-//     AddReview(bookId: $bookId, comment: $comment, rating: $rating) {
-//       ok
-//       error
-//       reviewId
-//     }
-//   }
-// `;
+export const GET_LISTS_OF_BOOK = gql`
+  query GetListsOfBook($bookId: Int!) {
+    GetListsOfBook(bookId: $bookId) {
+      lists {
+        id
+        title
+      }
+    }
+  }
+`;
