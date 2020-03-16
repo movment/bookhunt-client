@@ -12,6 +12,7 @@ export const BoardWrapper = styled.main`
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  min-height: 800px;
 `;
 const Section = styled(Link)`
   display: flex;
@@ -41,8 +42,8 @@ const BookImage = styled.div<any>`
   font-size: 32px;
   line-height: 32px;
   border-radius: 10px;
-  height: 300px;
-  width: 200px;
+  height: ${(props) => props.height || '300px'};
+  width: ${(props) => props.width || '200px'};
   background-image: url(${(props) => props.image});
   background-size: cover;
   box-shadow: 0px 0px 6px 0px inset;
@@ -51,8 +52,10 @@ const BookImage = styled.div<any>`
 interface IProps {
   books?: any[] | undefined | null;
   lists?: any[] | undefined | null;
+  width?: string;
+  height?: string;
 }
-const BordPresenter: React.SFC<IProps> = ({ books, lists }) => {
+const BordPresenter: React.SFC<IProps> = ({ books, lists, width, height }) => {
   const url = books ? '/book/' : '/list/';
   return (
     <>
@@ -63,6 +66,8 @@ const BordPresenter: React.SFC<IProps> = ({ books, lists }) => {
               to={url + content?.id}
               key={content?.id}
               image={content?.image}
+              width={width}
+              height={height}
             />
             <TitleWrapper>
               <Title type="small">{content?.title}</Title>
