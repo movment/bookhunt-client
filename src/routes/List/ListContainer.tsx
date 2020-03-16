@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import ListPresenter from './ListPresenter';
+import jwt from 'jsonwebtoken';
 import { GET_BOOKS_IN_LIST, ADD_BOOK_IN_LIST } from './ListQueries';
 import { RouteComponentProps } from 'react-router-dom';
 import { GetBooksInList } from '../../types/api';
@@ -10,13 +11,15 @@ interface IParams {
 }
 
 const ListContainer: React.SFC<RouteComponentProps<IParams>> = ({ match }) => {
+  const token = localStorage.getItem('jwt');
+  let userId = token && (jwt.decode(token) as any).id;
+
   const { data, refetch } = useQuery<GetBooksInList>(GET_BOOKS_IN_LIST, {
     variables: {
       listId: parseInt(match.params.id),
     },
     fetchPolicy: 'network-only',
   });
-  console.log(data);
   const [addBookInList] = useMutation(ADD_BOOK_IN_LIST, {
     onCompleted: () => {
       refetch();
@@ -31,10 +34,13 @@ const ListContainer: React.SFC<RouteComponentProps<IParams>> = ({ match }) => {
 
   return (
     <ListPresenter
+      auth={userId === data?.GetBooksInList.list?.user.id}
       books={data?.GetBooksInList.books}
       clicked={clicked}
       onClick={onClick}
       handleClick={handleClick}
+      title={data?.GetBooksInList.list?.title as string}
+      user={data?.GetBooksInList.list?.user}
     />
   );
 };
