@@ -4,26 +4,36 @@ import React, {
   FormEventHandler,
   ChangeEventHandler,
 } from 'react';
+import queryString from 'query-string';
 import MyListPresenter from './MyListPresenter';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_MY_LIST, ADD_BOOK_LIST } from './MyListQueries';
-import { GetLists, AddBookList } from '../../types/api';
+import { GetLists } from '../../types/api';
 import Title from '../../components/Title';
 import { ADD_BOOK_LIST_IN_CACHE } from './MyListQueries.local';
+import { RouteComponentProps } from 'react-router-dom';
 
-const MyListContainer = () => {
+const MyListContainer: React.SFC<RouteComponentProps> = ({
+  location: { search },
+}) => {
+  const { page = '1' } = queryString.parse(search);
+
   const { data, error, loading } = useQuery<GetLists>(GET_MY_LIST, {
     variables: {
       type: 'MY',
+      // sort: 'PUBDATE',
+      page: parseInt(page as string),
     },
   });
+
   const [addList] = useMutation(ADD_BOOK_LIST_IN_CACHE, {});
-  const [addBookList] = useMutation<AddBookList>(ADD_BOOK_LIST, {
+  const [addBookList] = useMutation<any>(ADD_BOOK_LIST, {
     onCompleted: ({ AddBookList }) => {
       addList({
         variables: {
           id: AddBookList.list?.id,
           title: AddBookList.list?.title,
+          page: parseInt(page as string),
         },
       });
       setClicked(false);
@@ -62,6 +72,8 @@ const MyListContainer = () => {
       onClick={onClick}
       onSubmit={onSubmit}
       onChange={onChange}
+      page={page as string}
+      max={data?.GetLists.max as number}
     />
   );
 };

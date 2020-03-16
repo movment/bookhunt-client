@@ -1,14 +1,15 @@
 import { gql } from 'apollo-boost';
 
 export const GET_MY_LIST = gql`
-  query GetLists($type: options) {
-    GetLists(type: $type) {
+  query GetLists($type: options, $sort: SortOptions, $page: Int) {
+    GetLists(type: $type, sort: $sort, page: $page) {
       ok
       error
       lists {
         id
         title
       }
+      max
     }
   }
 `;

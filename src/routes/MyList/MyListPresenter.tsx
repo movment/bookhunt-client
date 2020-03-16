@@ -4,9 +4,9 @@ import Button from '../../components/Button';
 import styled from 'styled-components';
 import Form from '../../components/Form';
 import Input from '../../components/Input';
-import SLink from '../../components/SLink';
 import { Board, BoardWrapper, BoardButton } from '../../components/Board';
 import SearchInput from '../../components/SearchInput';
+import Pagination from '../../components/Pagination';
 
 interface IProps {
   lists: (GetLists_GetLists_lists | null)[] | null | undefined;
@@ -15,6 +15,8 @@ interface IProps {
   onClick: (event) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  page: string;
+  max: number;
 }
 
 const Container = styled.div`
@@ -58,6 +60,8 @@ const MyListPresenter: React.SFC<IProps> = ({
   onClick,
   onChange,
   onSubmit,
+  max,
+  page,
 }) => {
   return (
     <div>
@@ -82,11 +86,18 @@ const MyListPresenter: React.SFC<IProps> = ({
         <div style={{ width: '70%', margin: '0 auto' }}>
           <SearchInput />
         </div>
-
-        <BoardWrapper>
-          <BoardButton onClick={onClick} />
-          <Board lists={lists} />
-        </BoardWrapper>
+        <div style={{ minHeight: '800px' }}>
+          <BoardWrapper>
+            <BoardButton onClick={onClick} />
+            <Board lists={lists} />
+          </BoardWrapper>
+          <Pagination
+            to="/mylist"
+            sort="pubdate"
+            max={max}
+            page={parseInt(page)}
+          />
+        </div>
       </div>
     </div>
   );
