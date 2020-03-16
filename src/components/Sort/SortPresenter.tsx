@@ -16,14 +16,15 @@ const SortText = styled(Text)<any>`
 `;
 interface IProps {
   sort: string;
+  to: string;
 }
-const SortPresenter: React.SFC<IProps> = ({ sort }) => {
+const SortPresenter: React.SFC<IProps> = ({ sort, to }) => {
   return (
     <Container>
-      <SLink to="/tour?sort=views">
+      <SLink to={`${to}?sort=views`}>
         <SortText clicked={sort === 'views'}>인기도</SortText>
       </SLink>
-      <SLink to="/tour?sort=pubdate">
+      <SLink to={`${to}?sort=pubdate`}>
         <SortText clicked={sort === 'pubdate'}>최신순</SortText>
       </SLink>
     </Container>
