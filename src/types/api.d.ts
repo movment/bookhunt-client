@@ -8,20 +8,20 @@
 // ====================================================
 
 export interface GetReviews_GetReviews_reviews_user {
-  __typename: 'User';
+  __typename: "User";
   id: number;
   name: string;
 }
 
 export interface GetReviews_GetReviews_reviews {
-  __typename: 'Review';
+  __typename: "Review";
   id: number;
   comment: string;
   user: GetReviews_GetReviews_reviews_user | null;
 }
 
 export interface GetReviews_GetReviews {
-  __typename: 'GetReviewsResponse';
+  __typename: "GetReviewsResponse";
   ok: boolean;
   error: string | null;
   reviews: (GetReviews_GetReviews_reviews | null)[] | null;
@@ -45,7 +45,7 @@ export interface GetReviewsVariables {
 // ====================================================
 
 export interface AddReview_AddReview {
-  __typename: 'AddReviewResponse';
+  __typename: "AddReviewResponse";
   ok: boolean;
   error: string | null;
 }
@@ -70,7 +70,7 @@ export interface AddReviewVariables {
 // ====================================================
 
 export interface DelReview_DelReview {
-  __typename: 'DelReviewResponse';
+  __typename: "DelReviewResponse";
   ok: boolean;
   error: string | null;
 }
@@ -93,7 +93,7 @@ export interface DelReviewVariables {
 // ====================================================
 
 export interface GetBook_GetBooks_books {
-  __typename: 'Book';
+  __typename: "Book";
   isFav: boolean | null;
   id: number;
   title: string;
@@ -107,14 +107,33 @@ export interface GetBook_GetBooks_books {
 }
 
 export interface GetBook_GetBooks {
-  __typename: 'GetBooksResponse';
+  __typename: "GetBooksResponse";
   ok: boolean;
   error: string | null;
   books: (GetBook_GetBooks_books | null)[] | null;
 }
 
+export interface GetBook_GetListsOfBook_lists_user {
+  __typename: "User";
+  id: number;
+  name: string;
+}
+
+export interface GetBook_GetListsOfBook_lists {
+  __typename: "List";
+  id: number;
+  title: string;
+  user: GetBook_GetListsOfBook_lists_user;
+}
+
+export interface GetBook_GetListsOfBook {
+  __typename: "GetListsOfBookResponse";
+  lists: (GetBook_GetListsOfBook_lists | null)[] | null;
+}
+
 export interface GetBook {
   GetBooks: GetBook_GetBooks;
+  GetListsOfBook: GetBook_GetListsOfBook;
 }
 
 export interface GetBookVariables {
@@ -131,7 +150,7 @@ export interface GetBookVariables {
 // ====================================================
 
 export interface AddFavorite_AddFavorite {
-  __typename: 'AddFavoriteResponse';
+  __typename: "AddFavoriteResponse";
   ok: boolean;
   error: string | null;
 }
@@ -150,11 +169,39 @@ export interface AddFavoriteVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetListsOfBook
+// ====================================================
+
+export interface GetListsOfBook_GetListsOfBook_lists {
+  __typename: "List";
+  id: number;
+  title: string;
+}
+
+export interface GetListsOfBook_GetListsOfBook {
+  __typename: "GetListsOfBookResponse";
+  lists: (GetListsOfBook_GetListsOfBook_lists | null)[] | null;
+}
+
+export interface GetListsOfBook {
+  GetListsOfBook: GetListsOfBook_GetListsOfBook;
+}
+
+export interface GetListsOfBookVariables {
+  bookId: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: SearchBooks
 // ====================================================
 
 export interface SearchBooks_SearchBooks_books {
-  __typename: 'Book';
+  __typename: "Book";
   id: number;
   title: string;
   image: string | null;
@@ -163,7 +210,7 @@ export interface SearchBooks_SearchBooks_books {
 }
 
 export interface SearchBooks_SearchBooks {
-  __typename: 'SearchBooksResponse';
+  __typename: "SearchBooksResponse";
   ok: boolean;
   error: string | null;
   books: (SearchBooks_SearchBooks_books | null)[] | null;
@@ -188,7 +235,7 @@ export interface SearchBooksVariables {
 // ====================================================
 
 export interface AddBookInList_AddBookInList {
-  __typename: 'AddBookInListResponse';
+  __typename: "AddBookInListResponse";
   ok: boolean;
   error: string | null;
 }
@@ -212,7 +259,7 @@ export interface AddBookInListVariables {
 // ====================================================
 
 export interface GetBooksInList_GetBooksInList_books {
-  __typename: 'Book';
+  __typename: "Book";
   id: number;
   title: string;
   author: string;
@@ -220,19 +267,19 @@ export interface GetBooksInList_GetBooksInList_books {
 }
 
 export interface GetBooksInList_GetBooksInList_list_user {
-  __typename: 'User';
+  __typename: "User";
   id: number;
   name: string;
 }
 
 export interface GetBooksInList_GetBooksInList_list {
-  __typename: 'List';
+  __typename: "List";
   title: string;
   user: GetBooksInList_GetBooksInList_list_user;
 }
 
 export interface GetBooksInList_GetBooksInList {
-  __typename: 'GetBooksInListResponse';
+  __typename: "GetBooksInListResponse";
   ok: boolean;
   error: string | null;
   books: (GetBooksInList_GetBooksInList_books | null)[] | null;
@@ -257,16 +304,17 @@ export interface GetBooksInListVariables {
 // ====================================================
 
 export interface GetLists_GetLists_lists {
-  __typename: 'List';
+  __typename: "List";
   id: number;
   title: string;
 }
 
 export interface GetLists_GetLists {
-  __typename: 'GetListsResponse';
+  __typename: "GetListsResponse";
   ok: boolean;
   error: string | null;
   lists: (GetLists_GetLists_lists | null)[] | null;
+  max: number | null;
 }
 
 export interface GetLists {
@@ -275,6 +323,8 @@ export interface GetLists {
 
 export interface GetListsVariables {
   type?: options | null;
+  sort?: SortOptions | null;
+  page?: number | null;
 }
 
 /* tslint:disable */
@@ -287,13 +337,13 @@ export interface GetListsVariables {
 // ====================================================
 
 export interface AddBookList_AddBookList_list {
-  __typename: 'List';
+  __typename: "List";
   id: number;
   title: string;
 }
 
 export interface AddBookList_AddBookList {
-  __typename: 'AddBookListResponse';
+  __typename: "AddBookListResponse";
   ok: boolean;
   error: string | null;
   list: AddBookList_AddBookList_list | null;
@@ -317,7 +367,7 @@ export interface AddBookListVariables {
 // ====================================================
 
 export interface SearchDetail_SearchBooks_books {
-  __typename: 'Book';
+  __typename: "Book";
   id: number;
   title: string;
   image: string | null;
@@ -327,7 +377,7 @@ export interface SearchDetail_SearchBooks_books {
 }
 
 export interface SearchDetail_SearchBooks {
-  __typename: 'SearchBooksResponse';
+  __typename: "SearchBooksResponse";
   books: (SearchDetail_SearchBooks_books | null)[] | null;
 }
 
@@ -350,7 +400,7 @@ export interface SearchDetailVariables {
 // ====================================================
 
 export interface SignIn_SignIn {
-  __typename: 'SignInResponse';
+  __typename: "SignInResponse";
   ok: boolean;
   error: string | null;
   token: string | null;
@@ -375,7 +425,7 @@ export interface SignInVariables {
 // ====================================================
 
 export interface SignUp_SignUp {
-  __typename: 'SignUpResponse';
+  __typename: "SignUpResponse";
   ok: boolean;
   error: string | null;
 }
@@ -400,7 +450,7 @@ export interface SignUpVariables {
 // ====================================================
 
 export interface GetBooks_GetBooks_books {
-  __typename: 'Book';
+  __typename: "Book";
   id: number;
   title: string;
   image: string | null;
@@ -409,7 +459,7 @@ export interface GetBooks_GetBooks_books {
 }
 
 export interface GetBooks_GetBooks {
-  __typename: 'GetBooksResponse';
+  __typename: "GetBooksResponse";
   ok: boolean;
   error: string | null;
   books: (GetBooks_GetBooks_books | null)[] | null;
@@ -435,20 +485,23 @@ export interface GetBooksVariables {
 // ====================================================
 
 export interface GetAllList_GetLists_lists_user {
-  __typename: 'User';
+  __typename: "User";
   id: number;
   name: string;
 }
 
 export interface GetAllList_GetLists_lists {
-  __typename: 'List';
+  __typename: "List";
   id: number;
   title: string;
   user: GetAllList_GetLists_lists_user;
 }
 
 export interface GetAllList_GetLists {
-  __typename: 'GetListsResponse';
+  __typename: "GetListsResponse";
+  ok: boolean;
+  error: string | null;
+  max: number | null;
   lists: (GetAllList_GetLists_lists | null)[] | null;
 }
 
@@ -458,6 +511,8 @@ export interface GetAllList {
 
 export interface GetAllListVariables {
   type?: options | null;
+  sort?: SortOptions | null;
+  page?: number | null;
 }
 
 /* tslint:disable */
@@ -470,21 +525,21 @@ export interface GetAllListVariables {
 //==============================================================
 
 export enum Rating {
-  FIVE = 'FIVE',
-  FOR = 'FOR',
-  ONE = 'ONE',
-  THREE = 'THREE',
-  TWO = 'TWO',
+  FIVE = "FIVE",
+  FOR = "FOR",
+  ONE = "ONE",
+  THREE = "THREE",
+  TWO = "TWO",
 }
 
 export enum SortOptions {
-  PUBDATE = 'PUBDATE',
-  VIEWS = 'VIEWS',
+  PUBDATE = "PUBDATE",
+  VIEWS = "VIEWS",
 }
 
 export enum options {
-  ALL = 'ALL',
-  MY = 'MY',
+  ALL = "ALL",
+  MY = "MY",
 }
 
 //==============================================================
