@@ -7,7 +7,7 @@ const Container = styled.div`
   position: absolute;
   left: 0;
   top: 0;
-  z-index: -1;
+  /* z-index: -1; */
   width: 100%;
 `;
 const Header = styled.header`
@@ -41,39 +41,6 @@ const SearchWrapper = styled.div`
   width: 500px;
   transform: translateY(-20px);
 `;
-// const Search = styled(Input)`
-//   box-shadow: 2px 2px 3px 1px rgba(41, 41, 41, 0.2);
-// `;
-// const Ul = styled.ul<any>`
-//   display: ${(props) => props.display || 'none'};
-//   position: absolute;
-//   padding: 20px 0;
-//   width: 500px;
-//   box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
-//   border-radius: 5px;
-//   z-index: -1;
-// `;
-// const Li = styled.li`
-//   display: flex;
-//   padding: 20px;
-//   cursor: pointer;
-//   border-radius: 3px;
-
-//   &:hover {
-//     background-color: rgba(0, 0, 0, 0.05);
-//   }
-// `;
-// const Info = styled.div`
-//   padding: 20px;
-// `;
-// const Img = styled.img`
-//   width: 100px;
-// `;
-const Footer = styled.footer`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
 interface IProps {
   title: string;
@@ -95,21 +62,20 @@ const HomePresenter: React.SFC<IProps> = ({
   handleClick,
 }) => {
   return (
-    <Container>
-      <Header>
-        <Title>
-          <span>BookHunt</span>
-        </Title>
-      </Header>
-      <Main>
-        <SearchWrapper>
-          <SearchInput />
-        </SearchWrapper>
-      </Main>
-      <Footer>
-        <span>{'<b>서비스 이용약관</b>'.replace(/<\/?[^>]+(>|$)/g, '')}</span>
-      </Footer>
-    </Container>
+    <div style={{ height: '788px' }}>
+      <Container>
+        <Header>
+          <Title>
+            <span>BookHunt</span>
+          </Title>
+        </Header>
+        <Main>
+          <SearchWrapper>
+            <SearchInput />
+          </SearchWrapper>
+        </Main>
+      </Container>
+    </div>
   );
 };
 
