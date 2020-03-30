@@ -43,10 +43,12 @@ const Nav: React.SFC<IProps> = ({ isLoggedIn }) => {
         <SLink to="/">BookHunt</SLink>
       </div>
       <Sub>
-        <SLink to="/celeb" style={{ color: 'rgb(254, 78, 18)' }}>
+        {/* <SLink to="/celeb" style={{ color: 'rgb(254, 78, 18)' }}>
           #셀럽의 서재
+        </SLink> */}
+        <SLink to="/tour" style={{ color: 'rgb(254, 78, 18)' }}>
+          #둘러보기
         </SLink>
-        <SLink to="/tour">둘러보기</SLink>
         {isLoggedIn ? (
           <>
             <SLink to="/mylist">내 서재</SLink>
