@@ -54,7 +54,7 @@ const SearchInputContainer: React.SFC<RouteComponentProps & IProps> = ({
     if (value) {
       newTimer = setTimeout(
         () => searchBooks({ variables: { title: value, max: 3 } }),
-        500,
+        200,
       );
       setTimer(newTimer);
     }
