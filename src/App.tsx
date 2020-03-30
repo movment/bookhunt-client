@@ -27,10 +27,11 @@ const IS_LOGGED_IN = gql`
   }
 `;
 
-const App: React.SFC<RouteComponentProps> = ({ location }) => {
+const App: React.SFC<RouteComponentProps> = () => {
   const { data } = useQuery(IS_LOGGED_IN, {
     fetchPolicy: 'cache-only',
   });
+
   return (
     <>
       <Nav isLoggedIn={data?.auth.isLoggedIn} />
