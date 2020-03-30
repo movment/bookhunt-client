@@ -5,6 +5,7 @@ import Input from '../../components/Input';
 import Text from '../../components/Text';
 import Button from '../../components/Button';
 import SLink from '../../components/SLink';
+import SignForm from '../../components/SignForm';
 
 interface IProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -14,7 +15,7 @@ interface IProps {
 
 const SignUpPresenter: SFC<IProps> = ({ onSubmit, input, onChange }) => {
   return (
-    <Form onSubmit={onSubmit}>
+    <SignForm onSubmit={onSubmit}>
       <Title>BOOKHUNT</Title>
       <Title type="small">회원가입</Title>
       <Input
@@ -35,18 +36,18 @@ const SignUpPresenter: SFC<IProps> = ({ onSubmit, input, onChange }) => {
         value={input.password}
         onChange={onChange}
       />
-      <Input
+      {/* <Input
         name="verifyPassword"
         placeholder="비밀번호 확인"
         value={input.verifyPassword}
         onChange={onChange}
-      />
+      /> */}
       <Button style={{ width: '100%' }}>회원가입</Button>
-      <div>
+      {/* <div>
         <Text>이미 가입하셨나요? </Text>
         <SLink to="/signin">로그인</SLink>
-      </div>
-    </Form>
+      </div> */}
+    </SignForm>
   );
 };
 
