@@ -5,6 +5,7 @@ import { SIGN_IN } from './SignInQueries';
 import { RouteComponentProps } from 'react-router-dom';
 import { USER_SIGN_IN } from '../../queries/queries.local';
 import { SignIn } from '../../types/api';
+import axios from 'axios';
 
 const SignInContainer: React.SFC<RouteComponentProps> = ({ history }) => {
   const [userSignIn] = useMutation(USER_SIGN_IN);
@@ -32,12 +33,25 @@ const SignInContainer: React.SFC<RouteComponentProps> = ({ history }) => {
   };
   const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
-    signIn({
-      variables: {
-        email: input.email,
-        password: input.password,
-      },
-    });
+    // signIn({
+    //   variables: {
+    //     email: input.email,
+    //     password: input.password,
+    //   },
+    // });
+    axios
+      .post('http://localhost:4000/auth/signin', input, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+        userSignIn({
+          variables: {
+            token: res.data.token,
+          },
+        }).then(() => history.push('/'));
+      })
+      .catch((err) => console.log(err));
   };
 
   // console.log('SignIn', data);
