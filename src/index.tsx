@@ -6,12 +6,15 @@ import App from './App';
 import GlobalStyle from './components/GlobalStyle';
 import * as serviceWorker from './serviceWorker';
 import client from './apollo';
+import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.render(
   <ApolloProvider client={client}>
     <BrowserRouter>
       <GlobalStyle />
-      <App />
+      <CookiesProvider>
+        <App />
+      </CookiesProvider>
     </BrowserRouter>
   </ApolloProvider>,
   document.getElementById('root'),
