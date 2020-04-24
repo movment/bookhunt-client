@@ -13,7 +13,7 @@ const Container = styled.div`
 const Header = styled.header`
   position: relative;
   width: 100%;
-  height: 400px;
+  height: 500px;
   /* background-color: grey; */
   background-image: url('/unsplash.jpg');
   background-repeat: no-repeat;
@@ -28,6 +28,7 @@ const Title = styled.div`
   justify-content: center;
   font-size: 32px;
   font-weight: 700;
+  text-shadow: -1px 0 white, 1px 0 white, 0 -1px white, 0 1px white;
 `;
 
 const Main = styled.main`
@@ -62,7 +63,7 @@ const HomePresenter: React.SFC<IProps> = ({
   handleClick,
 }) => {
   return (
-    <div style={{ height: '788px' }}>
+    <div style={{ height: '900px' }}>
       <Container>
         <Header>
           <Title>
